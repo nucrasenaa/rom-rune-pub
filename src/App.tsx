@@ -3,7 +3,7 @@ import {
   Button,
   Layout,
   Menu,
-  Icon,
+  // Icon, // Removed from here
   Row,
   Col,
   message,
@@ -12,7 +12,8 @@ import {
   Input,
   Tooltip
 } from "antd";
-import "antd/dist/antd.less";
+import Icon from "@ant-design/compatible/es/icon"; // Added this line
+// import "antd/dist/antd.less"; // Removed this line
 import "./App.scss";
 import $ from "jquery";
 import domtoimage from "dom-to-image";
@@ -442,6 +443,7 @@ class App extends React.PureComponent {
                   </div>
                   <CostSummary cost={this.state.cost} width={350} />
 
+                  // @ts-expect-error TS2322: Antd v3 Tabs children prop issue with React 18 types
                   <Tabs
                     defaultActiveKey="1"
                     onChange={this.handleSideTabChange}
