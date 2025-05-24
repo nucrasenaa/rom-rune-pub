@@ -81,7 +81,8 @@ class App extends React.PureComponent {
       cont: 0,
       medal: 0
     },
-    summary: []
+    summary: [],
+    shareURL:''
   };
 
   constructor(props: any) {
@@ -355,6 +356,11 @@ class App extends React.PureComponent {
   handleShareURL = (e: any) => {
     const shareUrl = this.runeSimulator!.generateShareKey();
     this.setState({
+      shareURL: shareUrl
+    });
+    console.log('shareUrl',shareUrl);
+    
+    this.setState({
       showShareModal: true
     });
     setTimeout(() => {
@@ -394,11 +400,20 @@ class App extends React.PureComponent {
   };
 
   copyShareLink = () => {
-    (this.refs.shareLinkInput as any).input.select();
-    setTimeout(() => {
-      document.execCommand("copy");
-    }, 10);
-    message.info("Link copied!", 2);
+    const shareUrl = this.state.shareURL;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        message.info("Link copied!", 2);
+      });
+    } else {
+      // fallback for older browsers
+      (this.refs.shareLinkInput as any).input.value = shareUrl;
+      (this.refs.shareLinkInput as any).input.select();
+      setTimeout(() => {
+        document.execCommand("copy");
+        message.info("Link copied!", 2);
+      }, 10);
+    }
   };
 
   handleCloseShareModal = (e: any) =>
