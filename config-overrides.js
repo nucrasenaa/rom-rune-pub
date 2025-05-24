@@ -1,18 +1,9 @@
-const { override, fixBabelImports, addLessLoader } = require("customize-cra");
+const { override, addWebpackPlugin } = require('customize-cra');
 
-module.exports = override(
-  fixBabelImports("import", {
-    libraryName: "antd",
-    libraryDirectory: "es",
-    style: true // Changed from 'css' to true
-  }),
-  addLessLoader({
-    // Options for less-loader v5
-    javascriptEnabled: true,
-    modifyVars: {
-      "primary-color": "#dc4478",
-      "link-color": "#e91e63",
-      "processing-color": "#e91e63"
-    }
-  })
-);
+module.exports = override((config) => {
+  // Remove ForkTsCheckerWebpackPlugin (TypeScript type checker)
+  config.plugins = config.plugins.filter(
+    plugin => plugin.constructor.name !== 'ForkTsCheckerWebpackPlugin'
+  );
+  return config;
+});

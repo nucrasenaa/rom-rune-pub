@@ -3,16 +3,33 @@ import {
   Button,
   Layout,
   Menu,
-  // Icon, // Removed from here
   Row,
   Col,
   message,
   Tabs,
   Modal,
   Input,
-  Tooltip
+  Tooltip,
+  Typography
 } from "antd";
-import Icon from "@ant-design/compatible/es/icon"; // Added this line
+import {
+  DoubleLeftOutlined,
+  UnorderedListOutlined,
+  SettingOutlined,
+  MenuOutlined,
+  AppstoreOutlined,
+  FileImageOutlined,
+  ShareAltOutlined,
+  HeartFilled,
+  UndoOutlined,
+  RedoOutlined,
+  ZoomInOutlined,
+  BorderOuterOutlined,
+  ZoomOutOutlined,
+  CaretUpOutlined,
+  CopyOutlined,
+  ExclamationCircleOutlined
+} from "@ant-design/icons";
 // import "antd/dist/antd.less"; // Removed this line
 import "./App.scss";
 import $ from "jquery";
@@ -26,11 +43,9 @@ import {
   RODataLang,
   GameClasses
 } from "./AppInterfaces";
-import Text from "antd/lib/typography/Text";
 import CostSummary from "./components/CostSummary";
 import "react-device-detect";
 import { isMobile } from "react-device-detect";
-import ButtonGroup from "antd/lib/button/button-group";
 import RuneSearch from "./components/RuneSearch";
 import JobSelection from "./components/JobSelection";
 import JobTier from "./components/JobTier";
@@ -41,6 +56,7 @@ import { getDecodeUrlData } from "./UrlManager";
 const { Header, Content, Sider } = Layout;
 const { TabPane } = Tabs;
 const { confirm } = Modal;
+const { Text } = Typography;
 
 class App extends React.PureComponent {
   private defaultTier = Tier.t3;
@@ -367,7 +383,7 @@ class App extends React.PureComponent {
       okText: 'Yes, leave simulator.',
       okType: 'danger',
       cancelText: 'No, stay here',
-      iconType:'exclamation-circle',
+      icon: <ExclamationCircleOutlined />,
       onOk() {
         okFunction();
       },
@@ -438,12 +454,11 @@ class App extends React.PureComponent {
                 >
                   <div className="side-close">
                     <Button onClick={this.handleToggleSideMenu}>
-                      <Icon type="double-left" />
+                      <DoubleLeftOutlined />
                     </Button>
                   </div>
                   <CostSummary cost={this.state.cost} width={350} />
 
-                  // @ts-expect-error TS2322: Antd v3 Tabs children prop issue with React 18 types
                   <Tabs
                     defaultActiveKey="1"
                     onChange={this.handleSideTabChange}
@@ -456,7 +471,7 @@ class App extends React.PureComponent {
                     <TabPane
                       tab={
                         <span>
-                          <Icon type="unordered-list" />
+                          <UnorderedListOutlined />
                           Rune Summary
                         </span>
                       }
@@ -476,7 +491,7 @@ class App extends React.PureComponent {
                     <TabPane
                       tab={
                         <span>
-                          <Icon type="setting" />
+                          <SettingOutlined />
                           Option
                         </span>
                       }
@@ -494,14 +509,14 @@ class App extends React.PureComponent {
                               All Selection
                             </Text>
                             <div>
-                              <ButtonGroup>
+                              <Button.Group>
                                 <Button onClick={this.handleSelectAll}>
                                   Select All
                                 </Button>
                                 <Button onClick={this.handleResetRune}>
                                   Unselect All
                                 </Button>
-                              </ButtonGroup>
+                              </Button.Group>
                             </div>
                           </div>
                         </div>
@@ -564,24 +579,36 @@ class App extends React.PureComponent {
                             ? "inline-block"
                             : "none"
                         }}
+                        icon={<MenuOutlined />}
                       >
-                        <Icon type="menu" />
                         Menu
                       </Menu.Item>
-                      <Menu.Item key="0x" onClick={this.handleBackToDatabase}>
-                      <Icon type="appstore" />
+                      <Menu.Item 
+                        key="0x" 
+                        onClick={this.handleBackToDatabase}
+                        icon={<AppstoreOutlined />}
+                      >
                         Database
                       </Menu.Item>
-                      <Menu.Item key="1x" onClick={this.handleSaveImage}>
-                        <Icon type="file-image" />
+                      <Menu.Item 
+                        key="1x" 
+                        onClick={this.handleSaveImage}
+                        icon={<FileImageOutlined />}
+                      >
                         Save as Image
                       </Menu.Item>
-                      <Menu.Item key="2x" onClick={this.handleShareURL}>
-                        <Icon type="share-alt" />
+                      <Menu.Item 
+                        key="2x" 
+                        onClick={this.handleShareURL}
+                        icon={<ShareAltOutlined />}
+                      >
                         Share Link
                       </Menu.Item>
-                      <Menu.Item key="3x" onClick={this.handleGoToDonate}>
-                        <Icon type="heart" theme="filled" />
+                      <Menu.Item 
+                        key="3x" 
+                        onClick={this.handleGoToDonate}
+                        icon={<HeartFilled />}
+                      >
                         Donate
                       </Menu.Item>
                       {/*
@@ -602,7 +629,6 @@ class App extends React.PureComponent {
                   </Header>
                   <Row
                     className="top-panel-bar top-cost-summary"
-                    type="flex"
                     justify="center"
                   >
                     <Col span={24}>
@@ -611,7 +637,6 @@ class App extends React.PureComponent {
                   </Row>
                   <Row
                     className={`top-panel-bar top-control-container ${this.isTopControlOpen()}`}
-                    type="flex"
                     justify="center"
                     gutter={12}
                     style={{}}
@@ -655,15 +680,15 @@ class App extends React.PureComponent {
                       />
                     </Col>
                   </Row>
-                  <Row type="flex" justify="space-between">
+                  <Row justify="space-between">
                     <Col>
                       <div className="floating-history">
-                        <ButtonGroup size={isMobile ? "default" : "large"}>
+                        <Button.Group size={isMobile ? "default" : "large"}>
                           <Tooltip
                             title={`Undo ${!isMobile ? "(Ctrl + Z)" : ""}`}
                           >
                             <Button
-                              icon="undo"
+                              icon={<UndoOutlined />}
                               onClick={e => {
                                 this.runeSimulator!.undo();
                               }}
@@ -674,48 +699,48 @@ class App extends React.PureComponent {
                             title={`Redo ${!isMobile ? "(Ctrl + Y)" : ""}`}
                           >
                             <Button
-                              icon="redo"
+                              icon={<RedoOutlined />}
                               onClick={e => {
                                 this.runeSimulator!.redo();
                               }}
                             />
                           </Tooltip>
-                        </ButtonGroup>
+                        </Button.Group>
                       </div>
                     </Col>
                     <Col>
                       <div className="floating-zoom">
-                        <ButtonGroup size={isMobile ? "default" : "large"}>
+                        <Button.Group size={isMobile ? "default" : "large"}>
                           <Tooltip title="Zoom in">
                             <Button
-                              icon="zoom-in"
+                              icon={<ZoomInOutlined />}
                               onClick={this.handleZoomInClick}
                             />
                           </Tooltip>
                           <Tooltip title="Move to center">
                             <Button
-                              icon="border-outer"
+                              icon={<BorderOuterOutlined />}
                               onClick={this.handleResetViewClick}
                             />
                           </Tooltip>
                           <Tooltip title="Zoom out">
                             <Button
-                              icon="zoom-out"
+                              icon={<ZoomOutOutlined />}
                               onClick={this.handleZoomOutClick}
                             />
                           </Tooltip>
-                        </ButtonGroup>
+                        </Button.Group>
                       </div>
                     </Col>
                   </Row>
-                  <Row type="flex" justify="center">
+                  <Row justify="center">
                     <Col>
                       <div
                         onClick={this.handleToggleTopControl}
                         className={`wobble-hor-top-slow top-control-toggle ${this.isTopControlOpen()}`}
                         style={{}}
                       >
-                        <Icon type="caret-up" className="openCloseIcon" />
+                        <CaretUpOutlined className="openCloseIcon" />
                       </div>
                     </Col>
                   </Row>
@@ -768,7 +793,7 @@ class App extends React.PureComponent {
             addonBefore="Url Link"
             addonAfter={
               <Button onClick={this.copyShareLink} type="primary" size="large">
-                <Icon type="copy" /> Copy Link
+                <CopyOutlined /> Copy Link
               </Button>
             }
             value={window.location.href}
