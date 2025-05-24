@@ -53,7 +53,7 @@ import PathTypeSelection from "./components/PathTypeSelection";
 import RuneSummary from "./components/RuneSummary";
 import { getDecodeUrlData } from "./UrlManager";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content, Sider,Footer } = Layout;
 const { TabPane } = Tabs;
 const { confirm } = Modal;
 const { Text } = Typography;
@@ -583,13 +583,13 @@ class App extends React.PureComponent {
                       >
                         Menu
                       </Menu.Item>
-                      <Menu.Item 
+                      {/* <Menu.Item 
                         key="0x" 
                         onClick={this.handleBackToDatabase}
                         icon={<AppstoreOutlined />}
                       >
                         Database
-                      </Menu.Item>
+                      </Menu.Item> */}
                       <Menu.Item 
                         key="1x" 
                         onClick={this.handleSaveImage}
@@ -604,13 +604,13 @@ class App extends React.PureComponent {
                       >
                         Share Link
                       </Menu.Item>
-                      <Menu.Item 
+                      {/* <Menu.Item 
                         key="3x" 
                         onClick={this.handleGoToDonate}
                         icon={<HeartFilled />}
                       >
                         Donate
-                      </Menu.Item>
+                      </Menu.Item> */}
                       {/*
                       <Menu.Item key="2">Rune Simulator</Menu.Item>
                   <Menu.Item
@@ -779,6 +779,7 @@ class App extends React.PureComponent {
               </Layout>
             </Layout>
           </Layout>
+          <Footer>Forked from <a href="https://github.com/mandrx/rom-rune-pub" target="_blank" rel="noopener noreferrer" class="underline hover:text-gray-200">mandrx/rom-rune-pub</a></Footer>
         </Layout>
         <Modal
           className="share-link-modal"
@@ -803,6 +804,7 @@ class App extends React.PureComponent {
             onClick={this.copyShareLink}
           />
         </Modal>
+        
       </div>
     );
   }
