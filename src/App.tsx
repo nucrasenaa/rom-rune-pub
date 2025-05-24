@@ -337,7 +337,7 @@ class App extends React.PureComponent {
         .then(function (dataUrl) {
           const time = Date.now();
           const link = document.createElement("a");
-          link.download = `romcodex.com-${currentJobName
+          link.download = `${currentJobName
             .toLowerCase()
             .replace(" ", "-")}-rune-${time}.png`;
           link.href = dataUrl;

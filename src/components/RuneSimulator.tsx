@@ -954,7 +954,7 @@ export class RuneSimulator extends React.PureComponent<
           <i className="cost-icon icon-medal" />
           <span className="value">531</span>
         </div>
-        <div className="credit">romcodex.com/runes</div>
+        {/* <div className="credit">romcodex.com/runes</div> */}
       </div>
     );
   };
